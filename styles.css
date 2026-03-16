@@ -26,6 +26,13 @@ body {
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.header.scrolled {
+    background: linear-gradient(135deg, #0d1b4a, #1a365d);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    padding: 0.8rem 0;
 }
 
 .header .container {
@@ -64,6 +71,13 @@ body {
     transition: all 0.3s ease;
     padding: 0.5rem 1rem;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-links a i {
+    font-size: 1.1rem;
 }
 
 .nav-links a:hover {
@@ -74,8 +88,15 @@ body {
 .mobile-menu-btn {
     display: none;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    color: #ffd700;
+    transform: scale(1.1);
 }
 
 /* Hero Section */
@@ -117,6 +138,26 @@ body {
 @keyframes rotateBg {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 @keyframes float {
@@ -928,7 +969,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color:white;
+    color: #ccc;
 }
 
 .footer-section ul li i {
@@ -970,12 +1011,65 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* Mobile Navigation */
     .nav-links {
-        display: none;
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 80%;
+        max-width: 350px;
+        height: calc(100vh - 70px);
+        background: linear-gradient(135deg, #1a2a6c, #2a4d69);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 0;
+        transition: left 0.3s ease;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+        overflow-y: auto;
+    }
+    
+    .nav-links.active {
+        left: 0;
+    }
+    
+    .nav-links li {
+        margin-bottom: 0.5rem;
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: all 0.3s ease;
+    }
+    
+    .nav-links.active li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    .nav-links li:nth-child(1) { transition-delay: 0.1s; }
+    .nav-links li:nth-child(2) { transition-delay: 0.15s; }
+    .nav-links li:nth-child(3) { transition-delay: 0.2s; }
+    .nav-links li:nth-child(4) { transition-delay: 0.25s; }
+    .nav-links li:nth-child(5) { transition-delay: 0.3s; }
+    
+    .nav-links a {
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        justify-content: flex-start;
+    }
+    
+    .nav-links a:hover {
+        background: rgba(255, 215, 0, 0.2);
+        padding-left: 2rem;
     }
     
     .mobile-menu-btn {
         display: block;
+        z-index: 1000;
+    }
+    
+    .mobile-menu-btn.open {
+        color: #ffd700;
+        transform: rotate(90deg);
     }
     
     .hero-title {
@@ -986,8 +1080,39 @@ body {
         font-size: 1.1rem;
     }
     
+    .hero-features {
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .hero-feature {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .floating-badge {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .badge-1 {
+        top: -10px;
+        right: -10px;
+    }
+    
+    .badge-2 {
+        bottom: 30px;
+        left: -10px;
+    }
+    
+    .badge-3 {
+        bottom: -10px;
+        right: 10px;
+    }
+    
     .hero-buttons {
         flex-direction: column;
+        width: 100%;
     }
     
     .btn {
@@ -1001,6 +1126,62 @@ body {
     .services-grid,
     .products-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .about-features {
+        grid-template-columns: 1fr;
+    }
+    
+    .experience-badge {
+        width: 100px;
+        height: 100px;
+        bottom: -20px;
+        right: -20px;
+    }
+    
+    .badge-inner .years {
+        font-size: 1.6rem;
+    }
+    
+    .badge-inner .text {
+        font-size: 0.65rem;
+    }
+    
+    .contact-info {
+        gap: 1rem;
+    }
+    
+    .contact-item {
+        padding: 1rem;
+    }
+    
+    .contact-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .footer-logo {
+        justify-content: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .footer-section ul li {
+        justify-content: center;
+    }
+    
+    .feature-tag {
+        justify-content: center;
     }
 }
 
@@ -1009,15 +1190,105 @@ body {
         padding: 0 15px;
     }
     
+    .header .container {
+        padding: 0 15px;
+    }
+    
+    .logo i {
+        font-size: 1.5rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+    
     .hero {
         padding: 100px 15px 30px;
     }
     
     .hero-title {
+        font-size: 1.6rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-features {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+    
+    .hero-feature {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .image-container {
+        width: 100%;
+    }
+    
+    .image-container img {
+        width: 100%;
+        height: auto;
+    }
+    
+    .floating-badge {
+        display: none;
+    }
+    
+    .section-header h2 {
         font-size: 1.8rem;
     }
     
-    .logo h1 {
-        font-size: 1.5rem;
+    .section-header p {
+        font-size: 0.95rem;
+    }
+    
+    .service-card {
+        padding: 1.5rem;
+    }
+    
+    .service-icon {
+        font-size: 2.5rem;
+    }
+    
+    .service-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .stat-item {
+        padding: 1rem;
+    }
+    
+    .stat-item h4 {
+        font-size: 2rem;
+    }
+    
+    .product-image {
+        height: 180px;
+    }
+    
+    .product-tags {
+        justify-content: center;
+    }
+    
+    .tag {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .map-container iframe {
+        height: 250px;
+    }
+    
+    .footer {
+        padding: 2rem 0 1rem;
+    }
+    
+    .footer-section h3,
+    .footer-section h4 {
+        font-size: 1.2rem;
     }
 }
